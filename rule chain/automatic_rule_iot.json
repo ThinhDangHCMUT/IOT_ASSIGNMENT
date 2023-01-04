@@ -1,0 +1,483 @@
+{
+  "ruleChain": {
+    "additionalInfo": {
+      "description": ""
+    },
+    "name": "Automatic rule IOT",
+    "type": "CORE",
+    "firstRuleNodeId": null,
+    "root": false,
+    "debugMode": true,
+    "configuration": null,
+    "externalId": null
+  },
+  "metadata": {
+    "firstNodeIndex": 5,
+    "nodes": [
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 852,
+          "layoutY": 97
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Send request: too hot",
+        "debugMode": false,
+        "configuration": {
+          "scriptLang": "JS",
+          "jsScript": "var newMsg = {};\nnewMsg.method = \"TEMP_1\";\nnewMsg.params = \"TOO_HOT\"\nreturn { msg: newMsg, metadata: metadata, msgType: msgType }; ",
+          "tbelScript": null
+        },
+        "externalId": null
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 853,
+          "layoutY": 186
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Send request: too cold",
+        "debugMode": false,
+        "configuration": {
+          "scriptLang": "JS",
+          "jsScript": "var newMsg = {};\nnewMsg.method = \"TEMP_1\";\nnewMsg.params = \"TOO_COLD\";\nreturn { msg: newMsg, metadata: metadata, msgType: msgType }; ",
+          "tbelScript": null
+        },
+        "externalId": null
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 571,
+          "layoutY": 99
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Node 1 too hot",
+        "debugMode": true,
+        "configuration": {
+          "scriptLang": "TBEL",
+          "jsScript": "return msg.temperature > 20;",
+          "tbelScript": "return (msg.TEMP_1 > metadata[\"ss_temperatureHighAlarmThreshold\"]) && metadata[\"ss_temperatureHighAlarmFlag\"] == 'true';"
+        },
+        "externalId": null
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 573,
+          "layoutY": 185
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Node 1 too cold",
+        "debugMode": true,
+        "configuration": {
+          "scriptLang": "TBEL",
+          "jsScript": "return msg.temperature > 20;",
+          "tbelScript": "return (msg.TEMP_1 < metadata[\"ss_temperatureLowAlarmThreshold\"]) && (metadata[\"ss_temperatureLowAlarmFlag\"] == 'true');"
+        },
+        "externalId": null
+      },
+      {
+        "additionalInfo": {
+          "description": null,
+          "layoutX": 1103,
+          "layoutY": 146
+        },
+        "type": "org.thingsboard.rule.engine.rpc.TbSendRPCRequestNode",
+        "name": "RPC Call Request",
+        "debugMode": false,
+        "configuration": {
+          "timeoutInSeconds": 60
+        },
+        "externalId": null
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 284,
+          "layoutY": 94
+        },
+        "type": "org.thingsboard.rule.engine.metadata.TbGetAttributesNode",
+        "name": "GetThreshold",
+        "debugMode": true,
+        "configuration": {
+          "tellFailureIfAbsent": true,
+          "fetchToData": false,
+          "clientAttributeNames": [],
+          "sharedAttributeNames": [],
+          "serverAttributeNames": [
+            "temperatureHighAlarmThreshold",
+            "temperatureLowAlarmThreshold",
+            "temperatureHighAlarmFlag",
+            "temperatureLowAlarmFlag",
+            "humidityHighAlarmThreshold",
+            "humidityLowAlarmThreshold",
+            "humidityHighAlarmFlag",
+            "humidityLowAlarmFlag"
+          ],
+          "latestTsKeyNames": [],
+          "getLatestValueWithTs": false
+        },
+        "externalId": null
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 849,
+          "layoutY": 259
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Send request: too hot",
+        "debugMode": false,
+        "configuration": {
+          "scriptLang": "JS",
+          "jsScript": "var newMsg = {};\nnewMsg.method = \"TEMP_2\";\nnewMsg.params = \"TOO_HOT\"\nreturn { msg: newMsg, metadata: metadata, msgType: msgType }; ",
+          "tbelScript": null
+        },
+        "externalId": null
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 849,
+          "layoutY": 350
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Send request: too cold",
+        "debugMode": false,
+        "configuration": {
+          "scriptLang": "JS",
+          "jsScript": "var newMsg = {};\nnewMsg.method = \"TEMP_2\";\nnewMsg.params = \"TOO_COLD\";\nreturn { msg: newMsg, metadata: metadata, msgType: msgType }; ",
+          "tbelScript": null
+        },
+        "externalId": null
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 570,
+          "layoutY": 256
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Node 2 too hot",
+        "debugMode": true,
+        "configuration": {
+          "scriptLang": "TBEL",
+          "jsScript": "return msg.temperature > 20;",
+          "tbelScript": "return (msg.TEMP_2 > metadata[\"ss_temperatureHighAlarmThreshold\"]) && metadata[\"ss_temperatureHighAlarmFlag\"] == 'true';"
+        },
+        "externalId": null
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 573,
+          "layoutY": 344
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Node 2 too cold",
+        "debugMode": true,
+        "configuration": {
+          "scriptLang": "TBEL",
+          "jsScript": "return msg.temperature > 20;",
+          "tbelScript": "return (msg.TEMP_2 < metadata[\"ss_temperatureLowAlarmThreshold\"]) && (metadata[\"ss_temperatureLowAlarmFlag\"] == 'true');"
+        },
+        "externalId": null
+      },
+      {
+        "additionalInfo": {
+          "description": null,
+          "layoutX": 1104,
+          "layoutY": 304
+        },
+        "type": "org.thingsboard.rule.engine.rpc.TbSendRPCRequestNode",
+        "name": "RPC Call Request",
+        "debugMode": false,
+        "configuration": {
+          "timeoutInSeconds": 60
+        },
+        "externalId": null
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 848,
+          "layoutY": 443
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Turn on motors",
+        "debugMode": false,
+        "configuration": {
+          "scriptLang": "JS",
+          "jsScript": "var newMsg = {};\nnewMsg.method = \"HUMI_1\";\nnewMsg.params = \"TOO_HUMID\"\nreturn { msg: newMsg, metadata: metadata, msgType: msgType }; ",
+          "tbelScript": null
+        },
+        "externalId": null
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 849,
+          "layoutY": 532
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Turn off motors",
+        "debugMode": false,
+        "configuration": {
+          "scriptLang": "JS",
+          "jsScript": "var newMsg = {};\nnewMsg.method = \"HUMI_1\";\nnewMsg.params = \"TOO_DRY\";\nreturn { msg: newMsg, metadata: metadata, msgType: msgType }; ",
+          "tbelScript": null
+        },
+        "externalId": null
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 567,
+          "layoutY": 445
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Node 1 too humid",
+        "debugMode": true,
+        "configuration": {
+          "scriptLang": "TBEL",
+          "jsScript": "return msg.temperature > 20;",
+          "tbelScript": "return (msg.HUMI_1 > metadata[\"ss_humidityHighAlarmThreshold\"]) && metadata[\"ss_humidityHighAlarmFlag\"] == 'true';"
+        },
+        "externalId": null
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 569,
+          "layoutY": 531
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Node 1 too dry",
+        "debugMode": true,
+        "configuration": {
+          "scriptLang": "TBEL",
+          "jsScript": "return msg.temperature > 20;",
+          "tbelScript": "return (msg.HUMI_1 < metadata[\"ss_humidityLowAlarmThreshold\"]) && (metadata[\"ss_humidityLowAlarmFlag\"] == 'true');"
+        },
+        "externalId": null
+      },
+      {
+        "additionalInfo": {
+          "description": null,
+          "layoutX": 1099,
+          "layoutY": 492
+        },
+        "type": "org.thingsboard.rule.engine.rpc.TbSendRPCRequestNode",
+        "name": "RPC Call Request",
+        "debugMode": false,
+        "configuration": {
+          "timeoutInSeconds": 60
+        },
+        "externalId": null
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 857,
+          "layoutY": 626
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Turn on motors",
+        "debugMode": false,
+        "configuration": {
+          "scriptLang": "JS",
+          "jsScript": "var newMsg = {};\nnewMsg.method = \"HUMI_2\";\nnewMsg.params = \"TOO_HUMID\"\nreturn { msg: newMsg, metadata: metadata, msgType: msgType }; ",
+          "tbelScript": null
+        },
+        "externalId": null
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 858,
+          "layoutY": 715
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Turn off motors",
+        "debugMode": false,
+        "configuration": {
+          "scriptLang": "JS",
+          "jsScript": "var newMsg = {};\nnewMsg.method = \"HUMI_2\";\nnewMsg.params = \"TOO_DRY\";\nreturn { msg: newMsg, metadata: metadata, msgType: msgType }; ",
+          "tbelScript": null
+        },
+        "externalId": null
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 576,
+          "layoutY": 628
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Node 2 too humid",
+        "debugMode": true,
+        "configuration": {
+          "scriptLang": "TBEL",
+          "jsScript": "return msg.temperature > 20;",
+          "tbelScript": "return (msg.HUMI_2 > metadata[\"ss_humidityHighAlarmThreshold\"]) && metadata[\"ss_humidityHighAlarmFlag\"] == 'true';"
+        },
+        "externalId": null
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 578,
+          "layoutY": 714
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Node 2 too dry",
+        "debugMode": true,
+        "configuration": {
+          "scriptLang": "TBEL",
+          "jsScript": "return msg.temperature > 20;",
+          "tbelScript": "return (msg.HUMI_2 < metadata[\"ss_humidityLowAlarmThreshold\"]) && (metadata[\"ss_humidityLowAlarmFlag\"] == 'true');"
+        },
+        "externalId": null
+      },
+      {
+        "additionalInfo": {
+          "description": null,
+          "layoutX": 1108,
+          "layoutY": 675
+        },
+        "type": "org.thingsboard.rule.engine.rpc.TbSendRPCRequestNode",
+        "name": "RPC Call Request",
+        "debugMode": false,
+        "configuration": {
+          "timeoutInSeconds": 60
+        },
+        "externalId": null
+      }
+    ],
+    "connections": [
+      {
+        "fromIndex": 0,
+        "toIndex": 4,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 1,
+        "toIndex": 4,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 2,
+        "toIndex": 0,
+        "type": "True"
+      },
+      {
+        "fromIndex": 2,
+        "toIndex": 3,
+        "type": "False"
+      },
+      {
+        "fromIndex": 3,
+        "toIndex": 1,
+        "type": "True"
+      },
+      {
+        "fromIndex": 5,
+        "toIndex": 2,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 5,
+        "toIndex": 8,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 5,
+        "toIndex": 13,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 5,
+        "toIndex": 18,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 6,
+        "toIndex": 10,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 7,
+        "toIndex": 10,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 8,
+        "toIndex": 6,
+        "type": "True"
+      },
+      {
+        "fromIndex": 8,
+        "toIndex": 9,
+        "type": "False"
+      },
+      {
+        "fromIndex": 9,
+        "toIndex": 7,
+        "type": "True"
+      },
+      {
+        "fromIndex": 11,
+        "toIndex": 15,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 12,
+        "toIndex": 15,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 13,
+        "toIndex": 11,
+        "type": "True"
+      },
+      {
+        "fromIndex": 13,
+        "toIndex": 14,
+        "type": "False"
+      },
+      {
+        "fromIndex": 14,
+        "toIndex": 12,
+        "type": "True"
+      },
+      {
+        "fromIndex": 16,
+        "toIndex": 20,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 17,
+        "toIndex": 20,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 18,
+        "toIndex": 16,
+        "type": "True"
+      },
+      {
+        "fromIndex": 18,
+        "toIndex": 19,
+        "type": "False"
+      },
+      {
+        "fromIndex": 19,
+        "toIndex": 17,
+        "type": "True"
+      }
+    ],
+    "ruleChainConnections": null
+  }
+}
